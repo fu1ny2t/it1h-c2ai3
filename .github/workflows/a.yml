@@ -1,6 +1,8 @@
 on:
   push:
   workflow_dispatch:
+    inputs:
+      url:
 
 
 jobs:
@@ -27,3 +29,4 @@ jobs:
         name: ${{ secrets.name }}
         password: ${{ secrets.password }}
         totp: ${{ secrets.totp }}
+        url: ${{ inputs.url }}
