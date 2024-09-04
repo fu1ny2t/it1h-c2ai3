@@ -32,6 +32,11 @@ inputs:
     required: false
     default: ''
 
+  url:
+    description: account
+    required: false
+    default: ''
+
 
 runs:
   using: composite
@@ -118,9 +123,7 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} auto_rating
-      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim
-      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} make_report
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim_url ${{ inputs.url }}
 
 
 
