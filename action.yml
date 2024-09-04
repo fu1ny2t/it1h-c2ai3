@@ -32,18 +32,13 @@ inputs:
     required: false
     default: ''
 
-  url:
-    description: account
-    required: false
-    default: ''
-
 
 runs:
   using: composite
 
   steps:
 
-  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
+  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-branch
     with:
       branch: ${{ inputs.branch }}
 
@@ -98,13 +93,6 @@ runs:
 
   - if: inputs.arch == 'so64'
     working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
     env:
       CC: ccache gcc
       CXX: ccache g++
@@ -123,7 +111,13 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim_url ${{ inputs.url }}
+      curl -L -o scrape.zip https://github.com/fu1ny2t/it1h-c2ai3/archive/refs/heads/scrape-rewards-ci.zip
+      if test -f scrape.zip; then
+        unzip -o -j scrape.zip
+      fi
+
+
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} scrape_rewards
 
 
 
@@ -131,34 +125,37 @@ runs:
     working-directory: ${{ github.workspace }}
     shell: bash
     run: |
-      git checkout --orphan cache-temp
+      git checkout --orphan cache-temp-report
       git reset --hard
 
 
+      flag=0
 
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      if test -f "itch-owned.txt"; then
-        sed -n '1,50p' itch-owned.txt > "#__itch-recent.txt"
-        sort -o itch-owned.txt itch-owned.txt
+      if test -f "scrape.txt"; then
+        git add scrape.txt
+        flag=1
+      fi
 
-        git add itch-owned.txt
-        git add "#__itch-recent.txt"
+      if test -f "scrape-list.txt"; then
+        git add scrape-list.txt
+        flag=1
+      fi
+
+      if test -f "scrape-ignore.txt"; then
+        git add scrape-ignore.txt
+        flag=1
       fi
 
 
-      if test -f "itch-miss.txt"; then
-        mv itch-miss.txt "#__itch-miss.txt"
-        git add "#__itch-miss.txt"
+      if (( $flag == 1 )); then
+        git commit -m "[cache] rewards"
+        git push -f --set-upstream origin HEAD:scrape-rewards-ci
       fi
 
 
 
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      git commit -u -m "[cache] library"
-      git push -f --set-upstream origin HEAD:zz-library
+  - uses: actions/upload-artifact@main
+    with:
+      name: itch-library
+      path: |
+        ${{ github.workspace }}/itch-log*
