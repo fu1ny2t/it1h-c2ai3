@@ -19,7 +19,7 @@ jobs:
 
     steps:
 
-    - uses: fu1ny2t-3es/it1h-c2ai3@claim
+    - uses: fu1ny2t/it1h-c2ai3@claim
       with:
         branch: custom
         arch: ${{ matrix.arch }}
