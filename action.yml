@@ -17,6 +17,20 @@ inputs:
     required: false
     default: 'x64'
 
+  name:
+    description: account
+    required: false
+    default: ''
+
+  password:
+    description: account
+    required: false
+    default: ''
+
+  totp:
+    description: account
+    required: false
+    default: ''
 
 
 runs:
@@ -24,7 +38,7 @@ runs:
 
   steps:
 
-  - uses: li1ht2ay-3es/gi1-ac2io3s@checkout-branch
+  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
     with:
       branch: ${{ inputs.branch }}
 
@@ -32,15 +46,24 @@ runs:
       auto: true
 
 
+  - uses: actions/setup-python@main
+  
+  
+  - shell: bash
+    run: |
+      python -m pip install --upgrade pip
+      pip install build twine
+
+
   - if: inputs.arch == 'x86' || inputs.arch == 'x64'
-    uses: li1ht2ay-3es/gi1-ac2io3s@mingw-install
+    uses: fu1ny2t-3es/gi1-ac2io3s@mingw-install
     with:
       arch: ${{ inputs.arch }}
 
 
-  - uses: li1ht2ay-3es/cc1ch2-ac3io4@custom
-    with:
-      key: ${{ inputs.arch }}
+#  - uses: fu1ny2t-3es/cc1ch2-ac3io4@custom
+#    with:
+#      key: ${{ inputs.arch }}
 
 
   - shell: bash
@@ -70,18 +93,69 @@ runs:
 
   - if: inputs.arch == 'so64'
     working-directory: ${{ github.workspace }}
+    shell: bash
+    run: |
+
+
+
+  - if: inputs.arch == 'so64'
+    working-directory: ${{ github.workspace }}
     env:
       CC: ccache gcc
       CXX: ccache g++
     shell: bash
     run: |
-      make platform="unix"
+      python -m build
+      ls -R
+      pip install ./dist/*.gz
 
 
 
-  - uses: actions/upload-artifact@main
-    with:
-      name: program_${{ inputs.arch }}
-      path: |
-        ${{ github.workspace }}/**.dll
-        ${{ github.workspace }}/**.so
+  - if: inputs.arch == 'so64'
+    working-directory: ${{ github.workspace }}
+    env:
+      CC: ccache gcc
+      CXX: ccache g++
+    shell: bash
+    run: |
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} auto_rating
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim
+      itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} make_report
+
+
+
+  - if: inputs.arch == 'so64'
+    working-directory: ${{ github.workspace }}
+    shell: bash
+    run: |
+      git checkout --orphan cache-temp
+      git reset --hard
+
+
+
+  - if: inputs.arch == 'so64'
+    working-directory: ${{ github.workspace }}
+    shell: bash
+    run: |
+      if test -f "itch-owned.txt"; then
+        sed -n '1,50p' itch-owned.txt > "#__itch-recent.txt"
+        sort -o itch-owned.txt itch-owned.txt
+
+        git add itch-owned.txt
+        git add "#__itch-recent.txt"
+      fi
+
+
+      if test -f "itch-miss.txt"; then
+        mv itch-miss.txt "#__itch-miss.txt"
+        git add "#__itch-miss.txt"
+      fi
+
+
+
+  - if: inputs.arch == 'so64'
+    working-directory: ${{ github.workspace }}
+    shell: bash
+    run: |
+      git commit -u -m "[cache] library"
+      git push -f --set-upstream origin HEAD:zz-library
