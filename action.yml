@@ -111,9 +111,7 @@ runs:
       CXX: ccache g++
     shell: bash
     run: |
-      curl -L -o scrape.zip https://github.com/fu1ny2t-3es/it1h-c2ai3/archive/refs/heads/scrape-rewards-ci.zip
-      ls -R
-      if test -f scrape.zip; then
+      if curl -L -o scrape.zip --silent --fail https://github.com/fu1ny2t/it1h-c2ai3/archive/refs/heads/scrape-rewards-ci.zip
         unzip -o -j scrape.zip
       fi
 
