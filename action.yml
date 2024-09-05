@@ -156,8 +156,6 @@ runs:
 
   - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
     with:
-      branch: master
-
       token: ${{ inputs.token }}
       auto: true
 
