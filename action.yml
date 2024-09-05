@@ -94,13 +94,6 @@ runs:
 
   - if: inputs.arch == 'so64'
     working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
     env:
       CC: ccache gcc
       CXX: ccache g++
@@ -123,6 +116,8 @@ runs:
       # itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim
       itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} make_report
 
+      mv *.txt ../
+
 
 
   - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
@@ -138,6 +133,7 @@ runs:
     run: |
       git checkout --orphan cache-temp
       git reset --hard
+      mv ../*.txt ./
 
 
 
