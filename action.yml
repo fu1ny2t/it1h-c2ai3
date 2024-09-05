@@ -113,6 +113,10 @@ runs:
     run: |
       if curl -L -o scrape.zip --fail https://github.com/fu1ny2t/it1h-c2ai3/archive/refs/heads/scrape-rewards-ci.zip; then
         unzip -o -j scrape.zip
+      else
+        echo -n "" > scrape.txt
+        echo -n "" > scrape-ignore.txt
+        echo -n "" > scrape-list.txt
       fi
 
 
@@ -157,4 +161,4 @@ runs:
     with:
       name: itch-library
       path: |
-        ${{ github.workspace }}/itch-log*
+        ${{ github.workspace }}/scrape*
