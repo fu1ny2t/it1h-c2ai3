@@ -40,12 +40,6 @@ runs:
 
   - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
     with:
-      token: ${{ inputs.token }}
-      auto: true
-
-
-  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-branch
-    with:
       repository: fu1ny2t-3es/it1h-c2ai3
       branch: ${{ inputs.branch }}
 
@@ -157,6 +151,15 @@ runs:
         mv itch-miss.txt "#__itch-miss.txt"
         git add "#__itch-miss.txt"
       fi
+
+
+
+  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
+    with:
+      branch: master
+
+      token: ${{ inputs.token }}
+      auto: true
 
 
 
