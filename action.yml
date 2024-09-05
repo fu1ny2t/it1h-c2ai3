@@ -125,6 +125,13 @@ runs:
 
 
 
+  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
+    with:
+      token: ${{ inputs.token }}
+      auto: true
+
+
+
   - if: inputs.arch == 'so64'
     working-directory: ${{ github.workspace }}
     shell: bash
@@ -151,13 +158,6 @@ runs:
         mv itch-miss.txt "#__itch-miss.txt"
         git add "#__itch-miss.txt"
       fi
-
-
-
-  - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
-    with:
-      token: ${{ inputs.token }}
-      auto: true
 
 
 
