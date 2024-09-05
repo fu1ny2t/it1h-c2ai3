@@ -20,8 +20,8 @@ runs:
 
     - uses: fu1ny2t-3es/gi1-ac2io3s@rebase-repo
       with:
-        remote_repo: Smart123s/ItchClaim
-        remote_branch: master
+        remote_repo: fu1ny2t-3es/it1h-c2ai3
+        remote_branch: custom
 
         token: ${{ inputs.token }}
         auto: true
