@@ -40,6 +40,7 @@ runs:
 
   - uses: fu1ny2t-3es/gi1-ac2io3s@checkout-repo
     with:
+      repository: fu1ny2t-3es/it1h-c2ai3
       branch: ${{ inputs.branch }}
 
       token: ${{ inputs.token }}
