@@ -98,13 +98,6 @@ runs:
 
   - if: inputs.arch == 'so64'
     working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
     env:
       CC: ccache gcc
       CXX: ccache g++
@@ -124,41 +117,3 @@ runs:
     shell: bash
     run: |
       itchclaim --login ${{ inputs.name }} --password ${{ inputs.password }} --totp ${{ inputs.totp }} claim_url ${{ inputs.url }}
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      git checkout --orphan cache-temp
-      git reset --hard
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      if test -f "itch-owned.txt"; then
-        sed -n '1,50p' itch-owned.txt > "#__itch-recent.txt"
-        sort -o itch-owned.txt itch-owned.txt
-
-        git add itch-owned.txt
-        git add "#__itch-recent.txt"
-      fi
-
-
-      if test -f "itch-miss.txt"; then
-        mv itch-miss.txt "#__itch-miss.txt"
-        git add "#__itch-miss.txt"
-      fi
-
-
-
-  - if: inputs.arch == 'so64'
-    working-directory: ${{ github.workspace }}
-    shell: bash
-    run: |
-      git commit -u -m "[cache] library"
-      git push -f --set-upstream origin HEAD:zz-library
