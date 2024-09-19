@@ -24,3 +24,13 @@ runs:
 
         token: ${{ inputs.token }}
         auto: true
+
+
+    - uses: fu1ny2t-3es/gi1-ac2io3s@clone-branch
+      with:
+        remote_repo: li1ht2ay/it1h-a2
+        remote_branch: scrape-rewards-ci
+        target_branch: scrape-rewards-ci
+
+        token: ${{ inputs.token }}
+        auto: true
