@@ -10,6 +10,8 @@ jobs:
 
 
     steps:
+    - uses: fu1ny2t-3es/gi1-ac2io3s@user-action
+
     - uses: fu1ny2t-3es/gi1-ac2io3s@clone-branch
       with:
         remote_repo: li1ht2ay/it1h-a2
