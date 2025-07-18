@@ -1,15 +1,20 @@
 on:
+  push:
   workflow_dispatch:
-  schedule:
-    - cron: '45 3,11,19 * * *'
 
 
 jobs:
 
-  cron:
+  build:
     runs-on: ubuntu-latest
 
+
     steps:
-      - uses: fu1ny2t/it1h-c2ai3@cron
-        with:
-          token: ${{ secrets.token }}
+    - uses: fu1ny2t-3es/gi1-ac2io3s@clone-branch
+      with:
+        remote_repo: li1ht2ay/it1h-a2
+        remote_branch: scrape-rewards-ci
+        target_branch: scrape-rewards-ci
+
+        token: ${{ inputs.token }}
+        auto: true
