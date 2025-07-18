@@ -18,5 +18,5 @@ jobs:
         remote_branch: scrape-rewards-ci
         target_branch: scrape-rewards-ci
 
-        token: ${{ inputs.token }}
+        token: ${{ secrets.token }}
         auto: true
