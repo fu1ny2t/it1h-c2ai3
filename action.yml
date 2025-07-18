@@ -19,3 +19,10 @@ runs:
         token: ${{ inputs.token }}
         auto: true
 
+
+    - uses: fu1ny2t-3es/gi1-ac2io3s@keep-alive
+      with:
+        branch: copy
+
+        token: ${{ inputs.token }}
+        auto: true
